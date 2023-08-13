@@ -1,10 +1,18 @@
 ---
-- name: Install yarn (Debian)
+- name: Install npm and yarn (Debian)
   import_tasks: Debian.yml
   when: ansible_os_family == 'Debian'
 
-- name: Install yarn (non-Debian)
+- name: Install npm and yarn (non-Debian)
   ansible.builtin.package:
-    name: yarn
+    name:
+      - nodejs
+      - yarn
     state: present
   when: ansible_os_family != 'Debian'
+
+- name: Install 'n' package
+  ansible.builtin.npm:
+    name: n
+    global: yes
+  when: n_enabled
