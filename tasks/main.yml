@@ -1,0 +1,10 @@
+---
+- name: Install yarn (Debian)
+  import_tasks: Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Install yarn (non-Debian)
+  ansible.builtin.package:
+    name: yarn
+    state: present
+  when: ansible_os_family != 'Debian'

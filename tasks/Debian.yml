@@ -1,0 +1,26 @@
+---
+# https://www.jeffgeerling.com/blog/2022/aptkey-deprecated-debianubuntu-how-fix-ansible
+- name: Add yarn apt repository key.
+  ansible.builtin.get_url:
+    url: "{{ yarn_repo_key_url }}"
+    dest: /usr/share/keyrings/yarn-archive.asc
+    mode: '0644'
+
+- name: Ensure the repository is added with the relevant trusted GPG key
+  ansible.builtin.lineinfile:
+    path: /etc/apt/sources.list.d/yarn.list
+    regexp: dl.yarnpkg.com
+    line: deb [arch=amd64 signed-by=/usr/share/keyrings/yarn-archive.asc] https://dl.yarnpkg.com/debian/ stable main
+    create: true
+  register: yarn_repo
+
+- name: Update the apt repository cache
+  ansible.builtin.apt:
+    update_cache: yes
+  when: yarn_repo.changed
+
+- name: Install the yarn package
+  ansible.builtin.apt:
+    name: yarn
+    state: present
+
