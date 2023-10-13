@@ -1,6 +1,6 @@
 # Ansible Role: nodejs
 
-Install nodejs, npm and yarn packages from the official yarn repositories. Optionally install n from npm repositories for version management.
+Install nodejs, npm and yarn packages from the official yarn repositories. Optionally install packages from npm repositories.
 
 Tested on:
 
@@ -16,7 +16,9 @@ None.
 
 ```yaml
 node_version: node_20.x
-n_enabled: yes
+npm_packages:
+  - n
+  - pnpm
 ```
 
 See the role [vars](vars/main.yml)

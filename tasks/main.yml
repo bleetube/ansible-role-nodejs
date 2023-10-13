@@ -11,8 +11,11 @@
     state: present
   when: ansible_os_family != 'Debian'
 
-- name: Install 'n' package
+- name: Install npm requirements
   ansible.builtin.npm:
-    name: n
+    name: "{{ item }}"
     global: yes
-  when: n_enabled
+    state: present
+  loop: "{{ npm_packages }}"
+  when: npm_packages is defined
+

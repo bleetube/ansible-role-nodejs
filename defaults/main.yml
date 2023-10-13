@@ -1,3 +1,5 @@
 ---
 node_version: node_20.x
-n_enabled: yes # https://github.com/tj/n
+
+npm_packages:
+  - n # https://github.com/tj/n
